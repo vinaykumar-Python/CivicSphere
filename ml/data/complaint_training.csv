@@ -1,0 +1,228 @@
+description,category,source
+Garbage has not been collected for three days,garbage,synthetic_ai
+Waste is piling up near my apartment,garbage,synthetic_ai
+The public dustbin is overflowing,garbage,synthetic_ai
+Plastic waste is scattered across the street,garbage,synthetic_ai
+The garbage collection vehicle did not arrive,garbage,synthetic_ai
+There is a bad smell from accumulated waste,garbage,synthetic_ai
+The roadside is covered with household rubbish,garbage,synthetic_ai
+Waste is dumped beside the bus stop,garbage,synthetic_ai
+The garbage bin near our building is full,garbage,synthetic_ai
+The area is dirty because waste is not removed,garbage,synthetic_ai
+There are large potholes on the main road,roads,synthetic_ai
+The road surface is badly damaged,roads,synthetic_ai
+A pothole caused damage to my vehicle,roads,synthetic_ai
+The street has broken pavement,roads,synthetic_ai
+The road needs urgent repairs,roads,synthetic_ai
+There is a large crack in the road,roads,synthetic_ai
+The road surface is uneven and dangerous,roads,synthetic_ai
+Construction damage has not been repaired,roads,synthetic_ai
+The road near the school is full of potholes,roads,synthetic_ai
+A section of the road has collapsed,roads,synthetic_ai
+The streetlights are not working at night,streetlights,synthetic_ai
+The lamp post outside my house is broken,streetlights,synthetic_ai
+Our street is completely dark after sunset,streetlights,synthetic_ai
+Several streetlights have stopped working,streetlights,synthetic_ai
+The public road lighting is faulty,streetlights,synthetic_ai
+A streetlight keeps flickering,streetlights,synthetic_ai
+The lamp near the bus stop does not work,streetlights,synthetic_ai
+The streetlight pole is damaged,streetlights,synthetic_ai
+The road has no working night lights,streetlights,synthetic_ai
+The lights along our street have gone out,streetlights,synthetic_ai
+There is no water supply in our area,water supply,synthetic_ai
+Water has not arrived since yesterday,water supply,synthetic_ai
+Our neighbourhood has very low water pressure,water supply,synthetic_ai
+The public water pipeline is leaking,water supply,synthetic_ai
+The tap water supply has stopped,water supply,synthetic_ai
+There is a water shortage in our locality,water supply,synthetic_ai
+The drinking water pipeline is damaged,water supply,synthetic_ai
+Water is not reaching our apartment,water supply,synthetic_ai
+The water connection is leaking continuously,water supply,synthetic_ai
+The municipal water supply is irregular,water supply,synthetic_ai
+The drainage is blocked near my house,drainage,synthetic_ai
+Wastewater is overflowing from the drain,drainage,synthetic_ai
+The stormwater drain is clogged,drainage,synthetic_ai
+Dirty water is accumulating on the street,drainage,synthetic_ai
+The roadside drain is full of waste,drainage,synthetic_ai
+Sewage is flowing onto the road,drainage,synthetic_ai
+Rainwater cannot flow through the blocked drain,drainage,synthetic_ai
+The drainage cover is broken,drainage,synthetic_ai
+Water is stagnant because the drain is blocked,drainage,synthetic_ai
+The sewer line appears to be blocked,drainage,synthetic_ai
+A damaged electrical wire is hanging over the road,public safety,synthetic_ai
+An uncovered manhole is dangerous for pedestrians,public safety,synthetic_ai
+A fallen tree is blocking the public road,public safety,synthetic_ai
+There is a dangerous exposed wire near a school,public safety,synthetic_ai
+A damaged public structure may collapse,public safety,synthetic_ai
+A large branch is about to fall onto the footpath,public safety,synthetic_ai
+An unsafe construction barrier is blocking pedestrians,public safety,synthetic_ai
+A broken railing creates a danger near the road,public safety,synthetic_ai
+A hazardous obstruction is blocking the footpath,public safety,synthetic_ai
+A damaged utility pole is leaning dangerously,public safety,synthetic_ai
+I have a question about a municipal service,other,synthetic_ai
+Please provide information about civic services,other,synthetic_ai
+I want to know the office working hours,other,synthetic_ai
+Where can I find the municipal service centre,other,synthetic_ai
+I need general information about a public scheme,other,synthetic_ai
+Please explain how to submit a civic complaint,other,synthetic_ai
+I want information about local government services,other,synthetic_ai
+How can I contact the municipal office,other,synthetic_ai
+I need assistance with a general civic enquiry,other,synthetic_ai
+Please provide details about public service procedures,other,synthetic_ai
+Garbage bags have been piling up near the apartment entrance for three days.,garbage,synthetic_ai
+The municipal waste collection vehicle has not visited our street this week.,garbage,synthetic_ai
+Food waste is scattered around the public dustbin and attracting flies.,garbage,synthetic_ai
+A garbage collection point is overflowing beside the bus stop.,garbage,synthetic_ai
+Household waste has been dumped illegally on the roadside.,garbage,synthetic_ai
+The public garbage container is broken and waste is falling onto the road.,garbage,synthetic_ai
+Plastic waste is accumulating near the local market.,garbage,synthetic_ai
+The waste collection workers skipped our residential area yesterday.,garbage,synthetic_ai
+Rotting garbage is creating a foul smell near the park entrance.,garbage,synthetic_ai
+The community bin has not been emptied for several days.,garbage,synthetic_ai
+Construction debris and household waste are mixed near our building.,garbage,synthetic_ai
+Garbage is blocking the entrance to the public walkway.,garbage,synthetic_ai
+Waste has been dumped near the school boundary wall.,garbage,synthetic_ai
+The street cleaning team left collected garbage on the pavement.,garbage,synthetic_ai
+Several public bins are full and need urgent collection.,garbage,synthetic_ai
+The roadside dumping area is attracting stray animals.,garbage,synthetic_ai
+Waste is scattered around the neighbourhood collection point.,garbage,synthetic_ai
+The garbage truck is repeatedly missing our apartment complex.,garbage,synthetic_ai
+An illegal waste pile has appeared near the playground.,garbage,synthetic_ai
+The market waste collection area needs immediate cleaning.,garbage,synthetic_ai
+A large pothole has appeared in the middle of our residential road.,roads,synthetic_ai
+The road surface is damaged and vehicles are swerving around it.,roads,synthetic_ai
+A section of the street has broken apart after heavy rain.,roads,synthetic_ai
+The road near the school has deep potholes.,roads,synthetic_ai
+The footpath tiles are broken and difficult for pedestrians to use.,roads,synthetic_ai
+An uncovered road excavation is creating a traffic hazard.,roads,synthetic_ai
+The road repair work has been left incomplete.,roads,synthetic_ai
+A damaged speed breaker is causing problems for vehicles.,roads,synthetic_ai
+The junction surface is uneven and needs resurfacing.,roads,synthetic_ai
+A roadside crater is becoming larger every day.,roads,synthetic_ai
+The pavement is cracked near the public hospital.,roads,synthetic_ai
+Road construction debris is obstructing one lane.,roads,synthetic_ai
+The street surface has sunk near the drainage crossing.,roads,synthetic_ai
+A damaged manhole cover is creating a hazard for motorists.,roads,synthetic_ai
+The road shoulder has collapsed near the residential layout.,roads,synthetic_ai
+The pedestrian pathway is blocked by broken paving stones.,roads,synthetic_ai
+A pothole near the bus stop is causing frequent traffic delays.,roads,synthetic_ai
+The road markings have faded at a busy intersection.,roads,synthetic_ai
+The asphalt has washed away near the roadside.,roads,synthetic_ai
+The damaged road needs inspection and repair.,roads,synthetic_ai
+The streetlight outside our house has stopped working.,streetlights,synthetic_ai
+Several streetlights along the main road are not illuminating at night.,streetlights,synthetic_ai
+The lamp post near the bus shelter flickers continuously.,streetlights,synthetic_ai
+A streetlight pole is leaning dangerously over the footpath.,streetlights,synthetic_ai
+The road near the park becomes completely dark after sunset.,streetlights,synthetic_ai
+The streetlights in our lane have been off for a week.,streetlights,synthetic_ai
+The light near the pedestrian crossing needs repair.,streetlights,synthetic_ai
+A damaged streetlight cable is hanging from the pole.,streetlights,synthetic_ai
+The lamp on the junction pole is broken.,streetlights,synthetic_ai
+The streetlight near the school gate is not switching on.,streetlights,synthetic_ai
+Our residential road has insufficient working streetlights.,streetlights,synthetic_ai
+The public walkway is dark because its lights are faulty.,streetlights,synthetic_ai
+The streetlight keeps switching off during the night.,streetlights,synthetic_ai
+A light fixture is broken near the market entrance.,streetlights,synthetic_ai
+The streetlight pole near the corner is damaged.,streetlights,synthetic_ai
+The lights on the service road have stopped working.,streetlights,synthetic_ai
+The streetlight near the crossing is blinking repeatedly.,streetlights,synthetic_ai
+The lamp post wiring appears exposed.,streetlights,synthetic_ai
+The streetlight outside the apartment gate needs replacement.,streetlights,synthetic_ai
+The public road lighting system is not functioning properly.,streetlights,synthetic_ai
+There has been no water supply to our apartment since yesterday.,water supply,synthetic_ai
+Tap water is arriving only for a few minutes each morning.,water supply,synthetic_ai
+The drinking water supplied to our building is muddy.,water supply,synthetic_ai
+A water pipeline leak is wasting water on the street.,water supply,synthetic_ai
+The municipal water connection has suddenly stopped working.,water supply,synthetic_ai
+Water is leaking continuously from a roadside supply pipe.,water supply,synthetic_ai
+The water supply schedule has not been followed this week.,water supply,synthetic_ai
+Residents are receiving discoloured water from their taps.,water supply,synthetic_ai
+The public water tap is broken and cannot be used.,water supply,synthetic_ai
+There is an interruption in the water supply to our street.,water supply,synthetic_ai
+The overhead supply line is leaking near the junction.,water supply,synthetic_ai
+The water coming from the tap has an unusual smell.,water supply,synthetic_ai
+Our building has not received its scheduled water supply.,water supply,synthetic_ai
+A damaged water pipe is flooding the roadside.,water supply,synthetic_ai
+The public drinking water point needs maintenance.,water supply,synthetic_ai
+Water pressure has dropped significantly in our area.,water supply,synthetic_ai
+The water connection near our house is leaking.,water supply,synthetic_ai
+The neighbourhood water tank is not supplying water.,water supply,synthetic_ai
+The water supply problem is affecting several nearby homes.,water supply,synthetic_ai
+The roadside drain is overflowing onto the street.,drainage,synthetic_ai
+Rainwater is accumulating because the storm drain is blocked.,drainage,synthetic_ai
+A clogged drain is causing dirty water to enter our lane.,drainage,synthetic_ai
+The drainage cover is broken near the apartment entrance.,drainage,synthetic_ai
+Sewage water is flowing across the public footpath.,drainage,synthetic_ai
+The roadside drain is emitting a strong unpleasant smell.,drainage,synthetic_ai
+Water is stagnant outside our building due to poor drainage.,drainage,synthetic_ai
+The stormwater drain is blocked with leaves and plastic.,drainage,synthetic_ai
+Drainage water is entering the nearby residential compound.,drainage,synthetic_ai
+A sewer line appears to be overflowing near the junction.,drainage,synthetic_ai
+The drain has not been cleaned for several weeks.,drainage,synthetic_ai
+Rainwater cannot flow because the drainage channel is obstructed.,drainage,synthetic_ai
+A damaged drain cover poses a risk to pedestrians.,drainage,synthetic_ai
+Wastewater is backing up into the street.,drainage,synthetic_ai
+The open drain near the school needs immediate cleaning.,drainage,synthetic_ai
+The drainage channel is full of mud and rubbish.,drainage,synthetic_ai
+Sewage leakage is creating unsanitary conditions in our area.,drainage,synthetic_ai
+The street floods because the storm drain is blocked.,drainage,synthetic_ai
+Dirty drainage water is collecting near the market.,drainage,synthetic_ai
+The drain outside our house needs repair and desilting.,drainage,synthetic_ai
+A fallen electrical wire is lying across the public walkway.,public safety,synthetic_ai
+An exposed electrical box is accessible to pedestrians.,public safety,synthetic_ai
+A damaged boundary wall may collapse onto the footpath.,public safety,synthetic_ai
+An open utility pit is creating a serious public hazard.,public safety,synthetic_ai
+A broken railing near the pedestrian bridge needs repair.,public safety,synthetic_ai
+A fallen tree is blocking the emergency access road.,public safety,synthetic_ai
+A damaged traffic signal is creating confusion at the junction.,public safety,synthetic_ai
+A loose metal structure is hanging above the sidewalk.,public safety,synthetic_ai
+A dangerous open trench has been left without warning signs.,public safety,synthetic_ai
+A damaged public staircase railing may cause injuries.,public safety,synthetic_ai
+A large branch is hanging over the busy road.,public safety,synthetic_ai
+A missing safety barrier leaves the roadside excavation exposed.,public safety,synthetic_ai
+A public playground structure has a sharp broken edge.,public safety,synthetic_ai
+The pedestrian crossing signal is not working safely.,public safety,synthetic_ai
+A damaged manhole is open and unmarked.,public safety,synthetic_ai
+A public building entrance has a dangerously broken step.,public safety,synthetic_ai
+A fallen pole is obstructing the emergency vehicle route.,public safety,synthetic_ai
+The safety barrier near the road has been damaged.,public safety,synthetic_ai
+An unstable signboard is hanging above the pavement.,public safety,synthetic_ai
+A hazardous obstruction is blocking the public footpath.,public safety,synthetic_ai
+The public park bench is broken and needs maintenance.,other,synthetic_ai
+A municipal notice board has been damaged.,other,synthetic_ai
+The public toilet door is broken and cannot close properly.,other,synthetic_ai
+The community hall requires general maintenance.,other,synthetic_ai
+A public seating area has damaged furniture.,other,synthetic_ai
+The park entrance gate is not closing properly.,other,synthetic_ai
+The public playground equipment needs routine inspection.,other,synthetic_ai
+A municipal facility has a damaged notice display.,other,synthetic_ai
+The public waiting shelter has a broken seat.,other,synthetic_ai
+A community centre window has been damaged.,other,synthetic_ai
+The public garden fence needs repair.,other,synthetic_ai
+The municipal building entrance sign is damaged.,other,synthetic_ai
+The public convenience facility needs maintenance.,other,synthetic_ai
+A bench at the bus shelter has become unusable.,other,synthetic_ai
+The community recreation area needs general repairs.,other,synthetic_ai
+The public park drinking fountain structure is damaged.,other,synthetic_ai
+A public information board is no longer readable.,other,synthetic_ai
+The municipal facility door handle is broken.,other,synthetic_ai
+The public seating shelter needs maintenance work.,other,synthetic_ai
+A shared community facility has a damaged entrance gate.,other,synthetic_ai
+The streetlight on our residential road has stopped working,streetlights,synthetic_ai
+Several lamp posts are not illuminating the main street at night,streetlights,synthetic_ai
+The streetlight outside the apartment entrance keeps flickering,streetlights,synthetic_ai
+The road lighting near the public park is completely off,streetlights,synthetic_ai
+A damaged street lamp leaves the footpath dark at night,streetlights,synthetic_ai
+The lamp post beside the bus stop needs electrical repair,streetlights,synthetic_ai
+Streetlights along the service road are not turning on,streetlights,synthetic_ai
+The pedestrian crossing signal is malfunctioning and creating danger,public safety,synthetic_ai
+A broken safety railing leaves pedestrians exposed to traffic,public safety,synthetic_ai
+The traffic signal at the intersection is not working,public safety,synthetic_ai
+A fallen electric wire is creating a danger for pedestrians,public safety,synthetic_ai
+A damaged manhole cover could cause an accident,public safety,synthetic_ai
+Broken paving stones make the pedestrian walkway unsafe,roads,synthetic_ai
+The road surface is damaged near the bus shelter,roads,synthetic_ai
+A pothole has formed in the middle of the residential road,roads,synthetic_ai
+The footpath pavement is cracked and needs repair,roads,synthetic_ai
+The drainage channel is overflowing onto the street,drainage,synthetic_ai
+Blocked stormwater drains are flooding the roadside,drainage,synthetic_ai

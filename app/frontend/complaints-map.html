@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Complaints Map | CivicCare AI</title>
+
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: "DM Sans", "Segoe UI", sans-serif;
+            background: #f3f7fc;
+            color: #172b4d;
+        }
+
+        header {
+            background: linear-gradient(120deg, #082b59, #1257a8);
+            color: white;
+            padding: 20px max(5%, calc((100% - 1280px) / 2));
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 16px;
+            flex-wrap: wrap;
+        }
+
+        header h1 {
+            font-size: 25px;
+            margin: 0 0 6px;
+        }
+
+        header p {
+            margin: 0;
+            color: #d7e4f5;
+        }
+
+        button,
+        select {
+            font: inherit;
+        }
+
+        button {
+            cursor: pointer;
+            border: 0;
+            border-radius: 8px;
+            padding: 11px 16px;
+            font-weight: 600;
+        }
+
+        .back-button {
+            background: white;
+            color: #142b4a;
+        }
+
+        main {
+            width: min(1280px, calc(100% - 48px));
+            margin: 0 auto;
+            padding: 28px 0 42px;
+        }
+
+        .notice {
+            padding: 15px 18px;
+            border-radius: 10px;
+            background: #e7f0ff;
+            color: #214d85;
+            margin-bottom: 20px;
+            line-height: 1.5;
+        }
+
+        .toolbar {
+            background: white;
+            padding: 20px;
+            border-radius: 14px;
+            display: flex;
+            gap: 16px;
+            align-items: end;
+            flex-wrap: wrap;
+            box-shadow: 0 4px 18px #152b4a0a;
+            margin-bottom: 20px;
+        }
+
+        .filter-field {
+            flex: 1;
+            min-width: 190px;
+        }
+
+        .filter-field label {
+            display: block;
+            font-weight: 700;
+            margin-bottom: 8px;
+        }
+
+        .filter-field select {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ccd5e2;
+            border-radius: 8px;
+            background: white;
+        }
+
+        .refresh-button {
+            background: #176b4d;
+            color: white;
+        }
+
+        .summary {
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            gap: 16px;
+            margin-bottom: 20px;
+        }
+
+        .summary-card {
+            background: white;
+            border-radius: 12px;
+            padding: 20px;
+            box-shadow: 0 4px 18px #152b4a0a;
+        }
+
+        .summary-card span {
+            color: #58677c;
+            font-size: 14px;
+        }
+
+        .summary-card strong {
+            display: block;
+            font-size: 30px;
+            margin-top: 8px;
+        }
+
+        .map-panel {
+            background: white;
+            padding: 22px;
+            border: 1px solid #dfe8f3;
+            border-radius: 18px;
+            box-shadow: 0 12px 32px rgba(22, 53, 94, 0.08);
+        }
+
+        .map-panel h2 {
+            margin: 0 0 8px;
+            font-size: 20px;
+        }
+
+        .map-panel p {
+            color: #58677c;
+            line-height: 1.5;
+        }
+
+        #authority-complaints-map {
+            width: min(100%, 1180px);
+            height: min(66vh, 680px);
+            min-height: 440px;
+            margin: 18px auto 0;
+            border-radius: 16px;
+            border: 1px solid #d6e2f0;
+            box-shadow: 0 8px 22px rgba(28, 62, 105, 0.1);
+            z-index: 1;
+        }
+
+        #authority-complaints-map .leaflet-control-zoom {
+            border: 1px solid #d6e2f0;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 3px 12px rgba(20, 45, 80, 0.12);
+        }
+
+        #authority-complaints-map .leaflet-control-zoom a {
+            color: #123a69;
+        }
+
+        #map-message {
+            padding: 12px 0;
+            line-height: 1.5;
+        }
+
+        .legend {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 18px;
+            margin-top: 16px;
+            color: #46546a;
+            font-size: 14px;
+        }
+
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .legend-dot {
+            width: 12px;
+            height: 12px;
+            display: inline-block;
+            border-radius: 50%;
+        }
+
+        .submitted { background: #2563eb; }
+        .in-progress { background: #d97706; }
+        .resolved { background: #16a34a; }
+        .rejected { background: #dc2626; }
+
+        @media (max-width: 700px) {
+            main {
+                width: calc(100% - 28px);
+                padding: 18px 0 28px;
+            }
+
+            .summary {
+                grid-template-columns: 1fr;
+            }
+
+            #authority-complaints-map {
+                height: 58vh;
+                min-height: 340px;
+                border-radius: 12px;
+            }
+
+            .map-panel {
+                padding: 15px;
+            }
+
+            header h1 {
+                font-size: 21px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <div>
+            <h1>🗺️ CivicCare AI</h1>
+            <p>Department Complaints Map</p>
+        </div>
+
+        <button class="back-button" id="back-to-dashboard">
+            ← Authority Dashboard
+        </button>
+    </header>
+
+    <main>
+        <div class="notice">
+            <strong>Department view:</strong>
+            This map displays complaints assigned to the signed-in authority's
+            department. Complaints without valid coordinates are listed in the
+            map message rather than being placed at an invented location.
+        </div>
+
+        <section class="toolbar">
+            <div class="filter-field">
+                <label for="category-filter">Issue category</label>
+                <select id="category-filter">
+                    <option value="all">All categories</option>
+                    <option value="garbage">Garbage</option>
+                    <option value="roads">Roads</option>
+                    <option value="streetlights">Streetlights</option>
+                    <option value="water supply">Water supply</option>
+                    <option value="drainage">Drainage</option>
+                    <option value="public safety">Public safety</option>
+                    <option value="other">Other</option>
+                </select>
+            </div>
+
+            <div class="filter-field">
+                <label for="status-filter">Complaint status</label>
+                <select id="status-filter">
+                    <option value="all">All statuses</option>
+                    <option value="submitted">Submitted</option>
+                    <option value="in_progress">In Progress</option>
+                    <option value="resolved">Resolved</option>
+                    <option value="rejected">Rejected</option>
+                </select>
+            </div>
+
+            <button class="refresh-button" id="refresh-map">
+                ↻ Refresh Map
+            </button>
+        </section>
+
+        <section class="summary">
+            <article class="summary-card">
+                <span>Department complaints</span>
+                <strong id="total-complaints">—</strong>
+            </article>
+
+            <article class="summary-card">
+                <span>Complaints with coordinates</span>
+                <strong id="mapped-complaints">—</strong>
+            </article>
+
+            <article class="summary-card">
+                <span>Without coordinates</span>
+                <strong id="unmapped-complaints">—</strong>
+            </article>
+        </section>
+
+        <section class="map-panel">
+            <h2>Complaint Locations</h2>
+            <p>
+                Select a marker to inspect its complaint ID, category,
+                status, address, and description.
+            </p>
+
+            <div id="map-message" role="status" aria-live="polite">
+                Loading department complaints…
+            </div>
+
+            <div id="authority-complaints-map"></div>
+
+            <div class="legend">
+                <span class="legend-item">
+                    <span class="legend-dot submitted"></span> Submitted
+                </span>
+                <span class="legend-item">
+                    <span class="legend-dot in-progress"></span> In Progress
+                </span>
+                <span class="legend-item">
+                    <span class="legend-dot resolved"></span> Resolved
+                </span>
+                <span class="legend-item">
+                    <span class="legend-dot rejected"></span> Rejected
+                </span>
+            </div>
+        </section>
+    </main>
+
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <script src="js/complaints-map.js"></script>
+</body>
+</html>

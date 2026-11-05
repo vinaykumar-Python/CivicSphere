@@ -1,0 +1,598 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#10243a">
+
+    <title>Citizen Dashboard | CivicCare AI</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@400;500;600;700;800&display=swap"
+        rel="stylesheet"
+    >
+
+    <link rel="stylesheet" href="css/style.css">
+ 
+
+    <!-- Leaflet map styles -->
+    <link
+        rel="stylesheet"
+        href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+    >
+
+    <style>
+        #complaint-map {
+            width: min(100%, 1080px);
+            height: 420px;
+            min-height: 320px;
+            border: 1px solid #d6e2f0;
+            border-radius: 18px;
+            margin: 18px auto;
+            overflow: hidden;
+            background: #eaf1f8;
+            box-shadow: 0 12px 30px rgba(28, 62, 105, 0.12);
+            z-index: 1;
+        }
+
+        .map-help {
+            color: #526176;
+            font-size: 14px;
+            line-height: 1.6;
+            margin: 8px 0 16px;
+        }
+
+        #get-my-location {
+            margin: 8px 0;
+            cursor: pointer;
+        }
+
+        #location-message {
+            display: block;
+            color: #526176;
+            font-size: 13px;
+            line-height: 1.5;
+            margin-top: 6px;
+        }
+
+        .location-actions {
+            margin-top: 8px;
+        }
+
+        /* Keep Leaflet controls and popups above the map tiles. */
+        #complaint-map .leaflet-pane,
+        #complaint-map .leaflet-top,
+        #complaint-map .leaflet-bottom {
+            z-index: auto;
+        }
+
+        #complaint-map .leaflet-control {
+            z-index: 800;
+        }
+
+        #complaint-map .leaflet-popup-content {
+            font-family: "DM Sans", sans-serif;
+            line-height: 1.6;
+        }
+
+        .table-responsive {
+            width: 100%;
+            overflow-x: auto;
+        }
+
+        @media (max-width: 600px) {
+            #complaint-map {
+                height: 340px;
+                min-height: 280px;
+                border-radius: 14px;
+            }
+        }
+    </style>
+
+    <!-- Load Leaflet before the dashboard JavaScript. -->
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+
+    <!-- Configure the default marker images before creating any markers. -->
+    <script>
+        window.addEventListener("DOMContentLoaded", function () {
+            if (!window.L) {
+                console.error(
+                    "Leaflet did not load. Check your internet connection or CDN access."
+                );
+                return;
+            }
+
+            delete L.Icon.Default.prototype._getIconUrl;
+
+            L.Icon.Default.mergeOptions({
+                iconRetinaUrl:
+                    "https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/images/marker-icon-2x.png",
+                iconUrl:
+                    "https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/images/marker-icon.png",
+                shadowUrl:
+                    "https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/images/marker-shadow.png"
+            });
+        });
+    </script>
+</head>
+
+<body class="dashboard-page citizen-dashboard-v2">
+<div class="civic-dashboard-shell citizen-shell">
+    <aside class="civic-sidebar" aria-label="Citizen navigation">
+        <a class="civic-sidebar-brand" href="index.html"><span class="civic-logo"><img src="assets/civiccare-mark.svg" alt=""></span><span>CivicCare AI</span></a>
+        <nav class="civic-sidebar-nav">
+            <a class="is-active" href="#dashboard-home">⌂ <span>Home</span></a>
+            <a href="#complaints-list">▤ <span>My Complaints</span></a>
+            <a href="#notification-bell" onclick="document.getElementById('notification-bell').click(); return false;">♧ <span>Notifications</span></a>
+            <a href="#citizen-analytics">▥ <span>My Analytics</span></a>
+            <a href="#complaint-form-section">＋ <span>Report an Issue</span></a>
+            <a href="#dashboard-help">? <span>Help &amp; Support</span></a>
+        </nav>
+        <div class="civic-sidebar-foot">Better cities, together</div>
+    </aside>
+    <div class="civic-dashboard-content">
+
+
+    <header class="dashboard-header">
+        <a class="brand" href="index.html" aria-label="CivicCare AI home">
+            <span class="brand-mark"><img src="assets/civiccare-mark.svg" alt=""></span>
+            <span class="brand-copy">
+                <strong>CivicCare<span> AI</span></strong>
+                <small>BETTER CITIES, TOGETHER</small>
+            </span>
+        </a>
+
+        <label class="dashboard-search">
+            <span aria-hidden="true">⌕</span>
+            <input type="search" aria-label="Search services" placeholder="Search services, track complaints...">
+        </label>
+
+        <div class="dashboard-header-actions">
+            <button
+    type="button"
+    class="notification-bell"
+    id="notification-bell"
+    aria-label="Open notifications"
+    aria-expanded="false"
+>
+    <span aria-hidden="true">🔔</span>
+    <span class="notification-count" id="notification-count" hidden>0</span>
+</button>
+            <span class="citizen-indicator">
+                <span class="status-dot"></span>
+                Citizen portal
+            </span>
+
+            <button
+                type="button"
+                class="button button-outline logout-button"
+                id="logout-button"
+            >
+                Log out
+            </button>
+        </div>
+    </header>
+
+    <main class="dashboard-main" id="dashboard-home">
+
+        <!-- Welcome -->
+        <section class="dashboard-welcome citizen-hero">
+            <div>
+                <span class="section-kicker"><span class="status-dot"></span> SMARTER CIVIC SERVICES</span>
+                <h1>Welcome, <span id="citizen-name">Citizen</span>.</h1>
+                <p>
+                    Report issues, track progress, and help build a cleaner,
+                    safer city.
+                </p>
+            </div>
+
+            <button type="button" class="button button-primary" id="open-complaint-button">
+                Report a Complaint <span aria-hidden="true">→</span>
+            </button>
+        </section>
+
+        <!-- Complaint Statistics -->
+        <section class="dashboard-stats" aria-label="Complaint statistics">
+            <article class="stat-card">
+                <span class="stat-label">Total complaints</span>
+                <strong id="stat-total">—</strong>
+                <span class="stat-caption">All your reports</span>
+            </article>
+
+            <article class="stat-card">
+                <span class="stat-label">In progress</span>
+                <strong id="stat-progress">—</strong>
+                <span class="stat-caption">Being addressed</span>
+            </article>
+
+            <article class="stat-card">
+                <span class="stat-label">Resolved</span>
+                <strong id="stat-resolved">—</strong>
+                <span class="stat-caption">Marked resolved</span>
+            </article>
+            <article class="stat-card">
+                <span class="stat-label">Rejected</span>
+                <strong id="stat-rejected">—</strong>
+                <span class="stat-caption">Reports closed</span>
+            </article>
+            <article class="stat-card">
+                <span class="stat-label">Pending</span>
+                <strong id="stat-submitted">—</strong>
+                <span class="stat-caption">Awaiting action</span>
+            </article>
+        </section>
+
+        <section class="citizen-overview" aria-label="Complaint overview">
+            <article class="citizen-overview-card recent-complaint-card">
+                <div class="overview-card-heading">
+                    <h2><span aria-hidden="true">▤</span> My Recent Complaints</h2>
+                    <a class="overview-text-link" href="#complaints-list">View All <span aria-hidden="true">→</span></a>
+                </div>
+                <div class="complaints-table-wrap recent-complaints-table">
+                    <table class="complaints-table">
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>Issue</th>
+                                <th>Category</th>
+                                <th>Status</th>
+                                <th>Submitted On</th>
+                            </tr>
+                        </thead>
+                        <tbody id="recent-complaints-table-body">
+                            <tr><td colspan="5" class="table-empty">Loading recent complaints...</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </article>
+
+            <article class="citizen-overview-card quick-actions-card">
+                <h2><span aria-hidden="true">⚡</span> Quick Actions</h2>
+                <div class="quick-actions-grid">
+                    <a class="quick-action-link" href="#complaint-form-section"><span aria-hidden="true">▤</span> Report a Complaint</a>
+                    <button class="quick-action-link" type="button" id="quick-notifications-button"><span aria-hidden="true">♧</span> View Alerts</button>
+                    <a class="quick-action-link" href="#weather-card"><span aria-hidden="true">☁</span> Check Weather</a>
+                    <a class="quick-action-link" href="index.html#home"><span aria-hidden="true">ⓘ</span> City Information</a>
+                </div>
+            </article>
+        </section>
+
+        <section class="citizen-analytics-panel" id="citizen-analytics" aria-label="My complaint analytics">
+            <div class="citizen-analytics-heading">
+                <div>
+                    <span class="section-kicker">YOUR REPORTS</span>
+                    <h2>My Analytics</h2>
+                    <p>See how your complaints are progressing and which issues you report most.</p>
+                </div>
+                <div class="analytics-tabs" role="tablist" aria-label="Complaint analytics view">
+                    <button type="button" class="analytics-tab is-active" id="analytics-status-tab" role="tab" aria-selected="true" aria-controls="analytics-status-view" data-analytics-view="status">By status</button>
+                    <button type="button" class="analytics-tab" id="analytics-category-tab" role="tab" aria-selected="false" aria-controls="analytics-category-view" data-analytics-view="category">By category</button>
+                </div>
+            </div>
+            <div class="analytics-view" id="analytics-status-view" role="tabpanel" aria-labelledby="analytics-status-tab">
+                <div class="citizen-status-chart-wrap">
+                    <div class="citizen-status-chart performance-donut-empty" id="citizen-status-chart" role="img" aria-label="Your complaint status breakdown">
+                        <span><strong id="citizen-chart-total">—</strong><small>reports</small></span>
+                    </div>
+                    <div class="citizen-status-legend">
+                        <span><i class="legend-resolved"></i> Resolved <strong id="citizen-legend-resolved">—</strong></span>
+                        <span><i class="legend-progress"></i> In progress <strong id="citizen-legend-progress">—</strong></span>
+                        <span><i class="legend-submitted"></i> Submitted <strong id="citizen-legend-submitted">—</strong></span>
+                        <span><i class="legend-rejected"></i> Rejected <strong id="citizen-legend-rejected">—</strong></span>
+                    </div>
+                </div>
+            </div>
+            <div class="analytics-view" id="analytics-category-view" role="tabpanel" aria-labelledby="analytics-category-tab" hidden>
+                <p class="analytics-empty" id="analytics-category-empty" hidden>No category data yet. Submit a complaint to see your issue breakdown.</p>
+                <div class="category-analytics-chart" id="category-analytics-chart"></div>
+            </div>
+            <p class="analytics-message" id="citizen-analytics-message" role="status" aria-live="polite" hidden></p>
+        </section>
+
+        <!-- Live Weather -->
+        <section class="weather-card" id="weather-card">
+            <div class="weather-header">
+                <div>
+                    <p class="weather-eyebrow">LIVE WEATHER</p>
+                    <h2>Local Weather</h2>
+                    <p id="weather-location">Detecting your location...</p>
+                </div>
+
+                <div class="weather-icon" id="weather-icon">🌤️</div>
+            </div>
+
+            <div
+                id="weather-message"
+                class="weather-message"
+                role="status"
+                aria-live="polite"
+            >
+                Loading current weather...
+            </div>
+
+            <div id="weather-details" class="weather-details" hidden>
+                <div class="weather-main">
+                    <span id="weather-temperature">--°C</span>
+                    <span id="weather-condition">Checking conditions...</span>
+                </div>
+
+                <div class="weather-metrics">
+                    <div class="weather-metric">
+                        <span>Feels like</span>
+                        <strong id="weather-feels-like">--°C</strong>
+                    </div>
+
+                    <div class="weather-metric">
+                        <span>Humidity</span>
+                        <strong id="weather-humidity">--%</strong>
+                    </div>
+
+                    <div class="weather-metric">
+                        <span>Wind speed</span>
+                        <strong id="weather-wind">-- km/h</strong>
+                    </div>
+
+                    <div class="weather-metric">
+                        <span>Precipitation</span>
+                        <strong id="weather-rain">-- mm</strong>
+                    </div>
+                </div>
+            </div>
+
+            <details class="weather-location-tools">
+                <summary>Change location</summary>
+            <div class="weather-controls">
+                <button type="button" id="weather-use-location">
+                    📍 Use My Location
+                </button>
+
+                <form id="weather-city-form">
+                    <label for="weather-city">Search city</label>
+                    <input
+                        type="text"
+                        id="weather-city"
+                        placeholder="Enter a city, e.g. Bengaluru"
+                        maxlength="100"
+                        autocomplete="off"
+                    >
+                    <button type="submit">Search</button>
+                </form>
+
+                <button type="button" id="weather-refresh">
+                    ↻ Refresh
+                </button>
+            </div>
+            </details>
+
+            <p class="weather-note">
+                Conditions can change quickly. Follow official local alerts during emergencies.
+            </p>
+        </section>
+
+        <!-- Weather Risk Monitor -->
+        <section class="risk-dashboard" id="risk-dashboard">
+            <div class="risk-panel-heading">
+                <div>
+                    <p class="risk-eyebrow">CIVICCARE INTELLIGENCE</p>
+                    <h2>Weather Risk Monitor</h2>
+                    <p id="risk-location">Loading location...</p>
+                </div>
+
+                <div class="risk-overall-wrap">
+                    <span>Overall risk</span>
+                    <strong id="risk-overall" data-risk="low">Loading...</strong>
+                </div>
+            </div>
+
+            <p id="risk-message" role="status" aria-live="polite">
+                Assessing current weather risks...
+            </p>
+
+            <div class="risk-indicators" id="risk-indicators"></div>
+
+            <button type="button" id="risk-refresh">
+                Refresh alerts
+            </button>
+        </section>
+
+        <!-- Complaint Submission -->
+        <section class="dashboard-panel" id="complaint-form-section">
+            <div class="panel-heading">
+                <div>
+                    <span class="section-kicker">REPORT AN ISSUE</span>
+                    <h2>Submit a complaint</h2>
+                    <p>
+                        Provide accurate details so the relevant department can
+                        review your report.
+                    </p>
+                </div>
+            </div>
+
+            <div
+                id="complaint-message"
+                class="auth-message"
+                role="status"
+                aria-live="polite"
+                hidden
+            ></div>
+
+            <form id="complaint-form" class="complaint-form" novalidate>
+                <div class="form-grid">
+
+                    <div class="form-field form-field-full">
+                        <label for="complaint-title">Complaint title</label>
+                        <input
+                            id="complaint-title"
+                            name="title"
+                            type="text"
+                            maxlength="200"
+                            placeholder="Briefly describe the issue"
+                            required
+                        >
+                    </div>
+
+                    <div class="form-field">
+                        <label for="complaint-category">Issue category</label>
+                        <select id="complaint-category" name="category" required>
+                            <option value="">Loading categories...</option>
+                        </select>
+                    </div>
+
+                    <div class="form-field form-field-full">
+                        <label for="complaint-location">Issue location</label>
+                        <input
+                            id="complaint-location"
+                            name="location"
+                            type="text"
+                            maxlength="255"
+                            placeholder="Area, street, or landmark"
+                            required
+                        >
+
+                        <div class="location-actions">
+                            <button type="button" id="get-my-location">
+                                📍 Get My Location
+                            </button>
+
+                            <span id="location-message" role="status" aria-live="polite">
+                                Enter an address or select a location on the map.
+                            </span>
+                        </div>
+
+                        <div
+                            id="complaint-map"
+                            role="application"
+                            aria-label="Map for selecting the complaint location"
+                        ></div>
+
+                        <p class="map-help">
+                            Click anywhere on the map to pin the location of
+                            your complaint.
+                        </p>
+
+                        <input type="hidden" id="complaint-latitude">
+                        <input type="hidden" id="complaint-longitude">
+                    </div>
+
+                    <div class="form-field form-field-full">
+                        <label for="complaint-description">Description</label>
+                        <textarea
+                            id="complaint-description"
+                            name="description"
+                            rows="5"
+                            placeholder="Explain the problem and any useful details..."
+                            required
+                        ></textarea>
+
+                    </div>
+                </div>
+
+                <button
+                    type="submit"
+                    class="button button-primary"
+                    id="submit-complaint-button"
+                >
+                    Submit complaint <span aria-hidden="true">→</span>
+                </button>
+            </form>
+        </section>
+
+        <!-- My Complaints -->
+        <section class="dashboard-panel" id="complaints-panel">
+            <div class="panel-heading complaints-heading">
+                <div>
+                    <span class="section-kicker">YOUR REPORTS</span>
+                    <h2>My complaints</h2>
+                    <p>
+                        Review your submitted complaints and check their current status.
+                    </p>
+                </div>
+
+                <button
+                    type="button"
+                    class="button button-outline"
+                    id="refresh-complaints-button"
+                >
+                    Refresh
+                </button>
+            </div>
+
+            <div
+                id="complaints-message"
+                class="auth-message"
+                role="status"
+                aria-live="polite"
+                hidden
+            ></div>
+
+            <div class="complaints-table-wrap" id="complaints-list">
+                <table class="complaints-table">
+                    <thead>
+                        <tr>
+                            <th>Complaint</th>
+                            <th>Category</th>
+                            <th>Department</th>
+                            <th>Date reported</th>
+                            <th>Status</th>
+                            <th>Details</th>
+                        </tr>
+                    </thead>
+
+                    <tbody id="complaints-table-body">
+                        <tr>
+                            <td colspan="6" class="table-empty">
+                                Loading your complaints...
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- Complaint History -->
+        <section
+            class="dashboard-panel history-panel"
+            id="complaint-history-section"
+            hidden
+        >
+            <div class="panel-heading">
+                <div>
+                    <span class="section-kicker">STATUS UPDATES</span>
+                    <h2 id="history-title">Complaint history</h2>
+                    <p>
+                        See how the status of your selected complaint has changed.
+                    </p>
+                </div>
+
+                <button
+                    type="button"
+                    class="button button-outline"
+                    id="close-history-button"
+                >
+                    Close history
+                </button>
+            </div>
+
+            <div id="history-content"></div>
+        </section>
+
+    </main>
+
+    <footer class="dashboard-footer" id="dashboard-help">
+        <span>© CivicCare AI</span>
+        <span>
+            Helping communities report, track, and resolve civic issues.
+        </span>
+    </footer>
+
+    </div>
+</div>    <!-- Keep dashboard scripts at the end of the body. -->
+    <script src="js/citizen-dashboard.js"></script>
+    <script src="js/weather.js"></script>
+    <script src="js/risk-dashboard.js"></script>
+    <script src="js/notifications.js"></script>
+
+</body>
+</html>

@@ -1,0 +1,78 @@
+{
+    "model": "TF-IDF + Logistic Regression",
+    "dataset_size": 227,
+    "training_samples": 170,
+    "testing_samples": 57,
+    "categories": [
+        "drainage",
+        "garbage",
+        "other",
+        "public safety",
+        "roads",
+        "streetlights",
+        "water supply"
+    ],
+    "test_accuracy": 0.8245614035087719,
+    "test_macro_f1": 0.8248532746431907,
+    "cross_validation_accuracy_mean": 0.8588235294117647,
+    "cross_validation_accuracy_std": 0.03429971702850177,
+    "cross_validation_macro_f1_mean": 0.8582603111174538,
+    "classification_report": {
+        "drainage": {
+            "precision": 0.8571428571428571,
+            "recall": 0.75,
+            "f1-score": 0.8,
+            "support": 8.0
+        },
+        "garbage": {
+            "precision": 0.8888888888888888,
+            "recall": 1.0,
+            "f1-score": 0.9411764705882353,
+            "support": 8.0
+        },
+        "other": {
+            "precision": 0.8571428571428571,
+            "recall": 0.8571428571428571,
+            "f1-score": 0.8571428571428571,
+            "support": 7.0
+        },
+        "public safety": {
+            "precision": 0.75,
+            "recall": 0.6666666666666666,
+            "f1-score": 0.7058823529411765,
+            "support": 9.0
+        },
+        "roads": {
+            "precision": 0.75,
+            "recall": 0.6666666666666666,
+            "f1-score": 0.7058823529411765,
+            "support": 9.0
+        },
+        "streetlights": {
+            "precision": 0.8888888888888888,
+            "recall": 0.8888888888888888,
+            "f1-score": 0.8888888888888888,
+            "support": 9.0
+        },
+        "water supply": {
+            "precision": 0.7777777777777778,
+            "recall": 1.0,
+            "f1-score": 0.875,
+            "support": 7.0
+        },
+        "accuracy": 0.8245614035087719,
+        "macro avg": {
+            "precision": 0.8242630385487528,
+            "recall": 0.832766439909297,
+            "f1-score": 0.8248532746431907,
+            "support": 57.0
+        },
+        "weighted avg": {
+            "precision": 0.8230297967140072,
+            "recall": 0.8245614035087719,
+            "f1-score": 0.8203560371517028,
+            "support": 57.0
+        }
+    },
+    "evaluation_note": "Metrics are based on a small complaint dataset. Validate using additional independent, representative complaints before production use."
+}

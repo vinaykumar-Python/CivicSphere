@@ -1,0 +1,797 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#102a43">
+
+    <title>Authority Dashboard | CivicCare AI</title>
+
+    <link rel="stylesheet" href="css/style.css">
+   
+    <style>
+        .authority-layout {
+            min-height: 100vh;
+            background: #f3f6fb;
+            color: #172b4d;
+        }
+
+        .authority-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 20px;
+            padding: 20px 5%;
+            background: #102a43;
+            color: #fff;
+        }
+
+        .authority-brand h1 {
+            margin: 0;
+            font-size: 25px;
+        }
+
+        .authority-brand p {
+            margin: 5px 0 0;
+            color: #cbd8e5;
+            font-size: 14px;
+        }
+
+        .authority-user {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .authority-user-info {
+            text-align: right;
+        }
+
+        .authority-user-info strong,
+        .authority-user-info span {
+            display: block;
+        }
+
+        .authority-user-info span {
+            margin-top: 4px;
+            color: #cbd8e5;
+            font-size: 13px;
+        }
+
+        .authority-logout {
+            padding: 10px 16px;
+            border: 1px solid #ffffff80;
+            border-radius: 8px;
+            background: transparent;
+            color: #fff;
+            cursor: pointer;
+            font-weight: 600;
+        }
+
+        .authority-logout:hover {
+            background: #ffffff18;
+        }
+
+        .authority-main {
+            width: min(1400px, 92%);
+            margin: 30px auto;
+        }
+
+        .authority-welcome {
+            margin-bottom: 25px;
+        }
+
+        .authority-welcome h2 {
+            margin: 0 0 8px;
+            font-size: clamp(25px, 3vw, 34px);
+        }
+
+        .authority-welcome p {
+            margin: 0;
+            color: #52647a;
+            line-height: 1.6;
+        }
+
+        .authority-stats {
+            display: grid;
+            grid-template-columns: repeat(5, minmax(0, 1fr));
+            gap: 16px;
+            margin-bottom: 28px;
+        }
+
+        .authority-stat {
+            padding: 22px;
+            border: 1px solid #e1e8f0;
+            border-radius: 14px;
+            background: #fff;
+            box-shadow: 0 4px 14px #102a4308;
+        }
+
+        .authority-stat span {
+            display: block;
+            color: #52647a;
+            font-size: 14px;
+            font-weight: 600;
+        }
+
+        .authority-stat strong {
+            display: block;
+            margin-top: 12px;
+            font-size: 32px;
+        }
+
+        .authority-stat.submitted {
+            border-top: 4px solid #2563eb;
+        }
+
+        .authority-stat.progress {
+            border-top: 4px solid #d97706;
+        }
+
+        .authority-stat.resolved {
+            border-top: 4px solid #15803d;
+        }
+
+        .authority-stat.rejected {
+            border-top: 4px solid #dc2626;
+        }
+
+        .authority-panel {
+            margin-bottom: 25px;
+            padding: 24px;
+            border: 1px solid #e1e8f0;
+            border-radius: 14px;
+            background: #fff;
+            box-shadow: 0 4px 14px #102a4308;
+        }
+
+        .authority-panel-heading {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .authority-panel-heading h3 {
+            margin: 0;
+            font-size: 21px;
+        }
+
+        .authority-filters {
+            display: grid;
+            grid-template-columns: minmax(200px, 2fr) repeat(2, minmax(160px, 1fr)) auto;
+            gap: 12px;
+            margin-bottom: 20px;
+        }
+
+        .authority-filters input,
+        .authority-filters select {
+            width: 100%;
+            min-width: 0;
+            padding: 12px 13px;
+            border: 1px solid #cbd5e1;
+            border-radius: 8px;
+            background: #fff;
+            color: #172b4d;
+            font-size: 14px;
+        }
+
+        .authority-button {
+            padding: 12px 16px;
+            border: 0;
+            border-radius: 8px;
+            background: #1769aa;
+            color: #fff;
+            cursor: pointer;
+            font-weight: 600;
+        }
+
+        .authority-button:hover {
+            background: #12548a;
+        }
+
+        .authority-button:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+
+        .authority-table-wrap {
+            overflow-x: auto;
+        }
+
+        .authority-table {
+            width: 100%;
+            border-collapse: collapse;
+            text-align: left;
+        }
+
+        .authority-table th,
+        .authority-table td {
+            padding: 15px 13px;
+            border-bottom: 1px solid #e8edf3;
+            vertical-align: top;
+        }
+
+        .authority-table th {
+            background: #f8fafc;
+            color: #52647a;
+            font-size: 12px;
+            letter-spacing: 0.04em;
+            text-transform: uppercase;
+            white-space: nowrap;
+        }
+
+        .authority-table td {
+            font-size: 14px;
+            line-height: 1.6;
+        }
+
+        .authority-table td strong {
+            color: #102a43;
+        }
+
+        .authority-table td select {
+            min-width: 135px;
+            padding: 9px;
+            border: 1px solid #cbd5e1;
+            border-radius: 7px;
+            background: #fff;
+            color: #172b4d;
+        }
+
+        .authority-status {
+            display: inline-block;
+            padding: 5px 9px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 700;
+            white-space: nowrap;
+        }
+
+        .authority-status.submitted {
+            background: #dbeafe;
+            color: #1d4ed8;
+        }
+
+        .authority-status.in_progress {
+            background: #fef3c7;
+            color: #92400e;
+        }
+
+        .authority-status.resolved {
+            background: #dcfce7;
+            color: #166534;
+        }
+
+        .authority-status.rejected {
+            background: #fee2e2;
+            color: #991b1b;
+        }
+
+        .authority-pagination {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .authority-pagination p {
+            color: #52647a;
+            font-size: 14px;
+        }
+
+        .authority-pagination-buttons {
+            display: flex;
+            gap: 8px;
+        }
+
+        .authority-pagination-buttons button {
+            padding: 9px 14px;
+            border: 1px solid #cbd5e1;
+            border-radius: 7px;
+            background: #fff;
+            color: #172b4d;
+            cursor: pointer;
+        }
+
+        .authority-pagination-buttons button:disabled {
+            opacity: 0.45;
+            cursor: not-allowed;
+        }
+
+        .authority-message {
+            margin-bottom: 18px;
+            padding: 13px 15px;
+            border-radius: 8px;
+            line-height: 1.5;
+        }
+
+        .authority-message[hidden] {
+            display: none;
+        }
+
+        .authority-message.error {
+            background: #fee2e2;
+            color: #991b1b;
+        }
+
+        .authority-message.success {
+            background: #dcfce7;
+            color: #166534;
+        }
+
+        .authority-message.info {
+            background: #dbeafe;
+            color: #1d4ed8;
+        }
+
+        .authority-empty {
+            padding: 35px 15px;
+            color: #64748b;
+            text-align: center;
+        }
+
+        .authority-footer {
+            padding: 22px;
+            color: #64748b;
+            text-align: center;
+            font-size: 13px;
+        }
+
+        @media (max-width: 1050px) {
+            .authority-stats {
+                grid-template-columns: repeat(3, minmax(0, 1fr));
+            }
+
+            .authority-filters {
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+            }
+        }
+
+        @media (max-width: 600px) {
+            .authority-header {
+                align-items: flex-start;
+                flex-direction: column;
+            }
+
+            .authority-user {
+                width: 100%;
+                justify-content: space-between;
+            }
+
+            .authority-user-info {
+                text-align: left;
+            }
+
+            .authority-main {
+                width: 94%;
+                margin-top: 22px;
+            }
+
+            .authority-stats {
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+                gap: 10px;
+            }
+
+            .authority-stat {
+                padding: 16px;
+            }
+
+            .authority-stat strong {
+                font-size: 27px;
+            }
+
+            .authority-panel {
+                padding: 16px;
+            }
+
+            .authority-filters {
+                grid-template-columns: 1fr;
+            }
+
+            .authority-pagination {
+                align-items: flex-start;
+                flex-direction: column;
+            }
+        }
+    </style>
+        <link rel="stylesheet" href="css/authority-dashboard.css">
+    </head>
+
+<body class="authority-dashboard-v2">
+<div class="authority-layout">
+
+<div class="civic-dashboard-shell authority-shell">
+    <aside class="civic-sidebar" aria-label="Authority navigation">
+        <a class="civic-sidebar-brand" href="index.html"><span class="civic-logo"><img src="assets/civiccare-mark.svg" alt=""></span><span>CivicCare AI</span></a>
+        <nav class="civic-sidebar-nav">
+            <a class="is-active" href="#authority-home">▦ <span>Dashboard</span></a>
+            <a href="#authority-complaints">▤ <span>Complaints</span></a>
+            <a href="#authority-overdue">◷ <span>Overdue</span></a>
+            <a href="#authority-insights">▥ <span>Performance</span></a>
+            <a href="#notification-bell" onclick="document.getElementById('notification-bell').click(); return false;">♧ <span>Notifications</span></a>
+            <a href="#weather-card">☼ <span>Weather Risk</span></a>
+        </nav>
+        <div class="civic-sidebar-foot">Department workspace</div>
+    </aside>
+    <div class="civic-dashboard-content">
+
+
+    <header class="authority-header">
+        <div class="authority-brand">
+            <img class="brand-mark" src="assets/civiccare-mark.svg" alt="">
+            <div>
+                <h1>CivicCare AI</h1>
+                <p>Department Authority Portal</p>
+            </div>
+        </div>
+
+        <label class="dashboard-search">
+            <span aria-hidden="true">⌕</span>
+            <input type="search" aria-label="Search complaints" placeholder="Search complaints, departments...">
+        </label>
+
+        <div class="authority-user">
+            <button
+    type="button"
+    class="notification-bell"
+    id="notification-bell"
+    aria-label="Open notifications"
+    aria-expanded="false"
+>
+    <span aria-hidden="true">🔔</span>
+    <span class="notification-count" id="notification-count" hidden>0</span>
+</button>
+            <div class="authority-user-info">
+                <strong id="authority-user-name">Loading authority...</strong>
+                <span id="authority-department-name">Loading department...</span>
+            </div>
+
+            <button
+                type="button"
+                class="authority-logout"
+                id="authority-logout-button"
+            >
+                Log out
+            </button>
+            <a class="authority-button authority-map-link" id="open-complaints-map" href="complaints-map.html">
+                <span aria-hidden="true">⌖</span> Complaints Map
+            </a>
+        </div>
+    </header>
+
+    <main class="authority-main" id="authority-home">
+        <section class="authority-welcome" id="authority-department">
+            <div class="authority-welcome-copy">
+                <span class="authority-eyebrow"><i></i> DEPARTMENT OPERATIONS</span>
+                <h2>Good day, <span id="authority-welcome-name">Authority</span></h2>
+                <p>Review incoming reports, coordinate responses, and keep your community informed.</p>
+                <a class="authority-hero-action" href="#authority-complaints">Review complaints <span aria-hidden="true">→</span></a>
+            </div>
+            <div class="authority-welcome-context">
+                <span>YOUR DEPARTMENT</span>
+                <strong id="authority-welcome-department">Loading department...</strong>
+                <small>Department workspace</small>
+            </div>
+        </section>
+
+        <section class="authority-stats" id="authority-stats-anchor" aria-label="Complaint statistics">
+            <article class="authority-stat authority-stat-total">
+                <span>Assigned Complaints</span>
+                <strong id="authority-stat-total">—</strong>
+            </article>
+
+            <article class="authority-stat authority-stat-submitted">
+                <span>Submitted</span>
+                <strong id="authority-stat-submitted">—</strong>
+            </article>
+
+            <article class="authority-stat progress">
+                <span>In Progress</span>
+                <strong id="authority-stat-progress">—</strong>
+            </article>
+
+            <article class="authority-stat resolved">
+                <span>Resolved</span>
+                <strong id="authority-stat-resolved">—</strong>
+            </article>
+            <article class="authority-stat rejected">
+                <span>Rejected</span>
+                <strong id="authority-stat-rejected">—</strong>
+            </article>
+        </section>
+
+        <section class="authority-insights" id="authority-insights" aria-label="Department insights">
+            <article class="authority-insight-card department-performance">
+                <h2>Department Performance</h2>
+                <div class="performance-content">
+                    <div class="performance-donut performance-donut-empty" id="authority-performance-chart" role="img" aria-label="Department performance will appear when complaint data loads">
+                        <span id="authority-performance-percent">0%</span>
+                    </div>
+                    <div class="performance-legend">
+                        <span><i class="legend-resolved"></i> Resolved <strong id="authority-legend-resolved">—</strong></span>
+                        <span><i class="legend-progress"></i> In Progress <strong id="authority-legend-progress">—</strong></span>
+                        <span><i class="legend-submitted"></i> Submitted <strong id="authority-legend-submitted">—</strong></span>
+                        <span><i class="legend-rejected"></i> Rejected <strong id="authority-legend-rejected">—</strong></span>
+                    </div>
+                </div>
+            </article>
+
+            <div class="authority-insight-stack">
+                <article class="authority-insight-card overdue-card" id="authority-overdue">
+                    <div>
+                        <h2>Overdue Complaints</h2>
+                        <strong id="authority-overdue-count">—</strong>
+                        <a href="#authority-complaints">View details <span aria-hidden="true">→</span></a>
+                    </div>
+                </article>
+                <article class="authority-insight-card recent-activity-card">
+                    <h2>Recent Activity</h2>
+                    <ul id="authority-recent-activity">
+                        <li>Loading recent complaints...</li>
+                    </ul>
+                </article>
+            </div>
+        </section>
+
+        <div
+            id="authority-message"
+            class="authority-message"
+            role="status"
+            aria-live="polite"
+            hidden>
+        </div>            
+        
+        <div class="authority-weather-grid">
+        <section class="weather-card" id="weather-card">
+            <div class="weather-header">
+                <div>
+                    <p class="weather-eyebrow">CITY CONDITIONS</p>
+                    <h2>Live Weather</h2>
+                    <p id="weather-location">Loading location...</p>
+                </div>
+                <div class="weather-icon" id="weather-icon">🌤️</div>
+            </div>
+
+            <div id="weather-message" class="weather-message" role="status">
+                Loading current weather...
+            </div>
+
+            <div id="weather-details" class="weather-details" hidden>
+                <div class="weather-main">
+                    <span id="weather-temperature">--°C</span>
+                    <span id="weather-condition">Checking conditions...</span>
+                </div>
+
+                <div class="weather-metrics">
+                    <div class="weather-metric">
+                        <span>Feels like</span>
+                        <strong id="weather-feels-like">--°C</strong>
+                    </div>
+
+                    <div class="weather-metric">
+                        <span>Humidity</span>
+                        <strong id="weather-humidity">--%</strong>
+                    </div>
+
+                    <div class="weather-metric">
+                        <span>Wind speed</span>
+                        <strong id="weather-wind">-- km/h</strong>
+                    </div>
+
+                    <div class="weather-metric">
+                        <span>Precipitation</span>
+                        <strong id="weather-rain">-- mm</strong>
+                    </div>
+                </div>
+            </div>
+
+            <details class="weather-location-tools">
+                <summary>Change location</summary>
+            <div class="weather-controls">
+                <button type="button" id="weather-use-location">
+                    📍 Use My Location
+                </button>
+
+                <form id="weather-city-form">
+                    <label for="weather-city">Search city</label>
+                    <input
+                        type="text"
+                        id="weather-city"
+                        placeholder="Enter a city, e.g. Bengaluru"
+                        maxlength="100"
+                        autocomplete="off"
+                    >
+                    <button type="submit">Search</button>
+                </form>
+
+                <button type="button" id="weather-refresh">
+                    ↻ Refresh
+                </button>
+            </div>
+            </details>
+
+            <p class="weather-note">
+                Conditions can change quickly. Follow official local alerts during emergencies.
+            </p>
+        </section>
+        
+
+       <!-- Weather Risk Intelligence Panel -->
+<section class="risk-dashboard" id="risk-dashboard">
+    <div class="risk-panel-heading">
+        <div>
+            <p class="risk-eyebrow">CIVICCARE INTELLIGENCE</p>
+            <h2>Weather Risk Monitor</h2>
+            <p id="risk-location">Loading location...</p>
+        </div>
+
+        <div class="risk-overall-wrap">
+            <span>Overall Risk Level</span>
+            <strong id="risk-overall" data-risk="low">Loading...</strong>
+        </div>
+    </div>
+
+    <p id="risk-message" role="status">
+        Assessing current weather risks...
+    </p>
+
+    <div class="risk-indicators" id="risk-indicators"></div>
+
+    <button type="button" id="risk-refresh">
+        Refresh alerts
+    </button>
+</section>
+<!-- End Weather Risk Intelligence Panel -->
+</div>
+
+        <section class="authority-quick-filters">
+    <div class="quick-filter-heading">
+        <div>
+            <h2>Complaint Overview</h2>
+            <p>Quickly filter complaints by their current status.</p>
+        </div>
+        <span class="live-indicator">● Live data</span>
+    </div>
+
+    <div class="quick-filter-buttons">
+        <button type="button" class="quick-filter active"
+                onclick="filterAuthorityComplaints('')">
+            All Complaints
+        </button>
+
+        <button type="button" class="quick-filter"
+                onclick="filterAuthorityComplaints('submitted')">
+            Submitted
+        </button>
+
+        <button type="button" class="quick-filter"
+                onclick="filterAuthorityComplaints('in_progress')">
+            In Progress
+        </button>
+
+        <button type="button" class="quick-filter"
+                onclick="filterAuthorityComplaints('resolved')">
+            Resolved
+        </button>
+
+        <button type="button" class="quick-filter"
+                onclick="filterAuthorityComplaints('rejected')">
+            Rejected
+        </button>
+    </div>
+</section>
+
+        <section class="authority-panel" id="authority-complaints">
+            <div class="authority-panel-heading">
+                <h3>Department Complaints</h3>
+
+                <button
+                    type="button"
+                    class="authority-button"
+                    id="authority-refresh-button"
+                >
+                    Refresh
+                </button>
+            </div>
+
+            <div class="authority-filters">
+                <input
+                    type="search"
+                    id="authority-search"
+                    placeholder="Search title, description, location..."
+                    aria-label="Search complaints"
+                >
+
+                <select id="authority-status-filter" aria-label="Filter by status">
+                    <option value="">All statuses</option>
+                    <option value="submitted">Submitted</option>
+                    <option value="in_progress">In Progress</option>
+                    <option value="resolved">Resolved</option>
+                    <option value="rejected">Rejected</option>
+                </select>
+
+                <select id="authority-category-filter" aria-label="Filter by category">
+                    <option value="">All categories</option>
+                    <option value="garbage">Garbage</option>
+                    <option value="roads">Roads</option>
+                    <option value="streetlights">Streetlights</option>
+                    <option value="water supply">Water Supply</option>
+                    <option value="drainage">Drainage</option>
+                    <option value="public safety">Public Safety</option>
+                    <option value="other">Other</option>
+                </select>
+
+                <button
+                    type="button"
+                    class="authority-button"
+                    id="authority-apply-filters"
+                >
+                    Apply filters
+                </button>
+            </div>
+
+            <div class="authority-table-wrap">
+                <table class="authority-table">
+                    <thead>
+                        <tr>
+                            <th>ID / Date</th>
+                            <th>Complaint</th>
+                            <th>Category</th>
+                            <th>Location</th>
+                            <th>Status</th>
+                            <th>Due Date</th>
+                            <th>Update Status</th>
+                        </tr>
+                    </thead>
+
+                    <tbody id="authority-complaints-body">
+                        <tr>
+                            <td colspan="7" class="authority-empty">
+                                Loading complaints...
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="authority-pagination">
+                <p id="authority-pagination-info">Loading page information...</p>
+
+                <div class="authority-pagination-buttons">
+                    <button
+                        type="button"
+                        id="authority-previous-page"
+                        disabled
+                    >
+                        Previous
+                    </button>
+
+                    <button
+                        type="button"
+                        id="authority-next-page"
+                        disabled
+                    >
+                        Next
+                    </button>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="authority-footer">
+        CivicCare AI · Supporting accountable civic issue resolution
+    </footer>
+
+    </div>
+</div>
+</div>
+
+<script src="js/authority-dashboard.js"></script>
+<script src="js/weather.js"></script>
+<script src="js/risk-dashboard.js"></script>
+<script src="js/notifications.js"></script>
+</body>
+</html>
