@@ -885,20 +885,46 @@ if (locationMessage) {
         }
     );
 
-    document.querySelectorAll("[data-analytics-view]").forEach(tab => {
-        tab.addEventListener("click", () => {
-            const selectedView = tab.dataset.analyticsView;
+    const analyticsTabs = Array.from(
+        document.querySelectorAll("[data-analytics-view]")
+    );
 
-            document.querySelectorAll("[data-analytics-view]").forEach(item => {
-                const selected = item === tab;
-                item.classList.toggle("is-active", selected);
-                item.setAttribute("aria-selected", String(selected));
-            });
+    function selectAnalyticsTab(tab) {
+        const selectedView = tab.dataset.analyticsView;
 
-            document.getElementById("analytics-status-view").hidden =
-                selectedView !== "status";
-            document.getElementById("analytics-category-view").hidden =
-                selectedView !== "category";
+        analyticsTabs.forEach(item => {
+            const selected = item === tab;
+            item.classList.toggle("is-active", selected);
+            item.setAttribute("aria-selected", String(selected));
+            item.tabIndex = selected ? 0 : -1;
+        });
+
+        document.getElementById("analytics-status-view").hidden =
+            selectedView !== "status";
+        document.getElementById("analytics-category-view").hidden =
+            selectedView !== "category";
+    }
+
+    analyticsTabs.forEach((tab, index) => {
+        tab.addEventListener("click", () => selectAnalyticsTab(tab));
+        tab.addEventListener("keydown", event => {
+            let nextIndex;
+
+            if (event.key === "ArrowRight") {
+                nextIndex = (index + 1) % analyticsTabs.length;
+            } else if (event.key === "ArrowLeft") {
+                nextIndex = (index - 1 + analyticsTabs.length) % analyticsTabs.length;
+            } else if (event.key === "Home") {
+                nextIndex = 0;
+            } else if (event.key === "End") {
+                nextIndex = analyticsTabs.length - 1;
+            } else {
+                return;
+            }
+
+            event.preventDefault();
+            analyticsTabs[nextIndex].focus();
+            selectAnalyticsTab(analyticsTabs[nextIndex]);
         });
     });
 

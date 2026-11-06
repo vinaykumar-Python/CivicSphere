@@ -424,15 +424,39 @@ body.authority-dashboard-v2 {
   height:auto;
   margin:0 !important;
   padding:15px !important;
-  border:1px solid #dce7f8;
+  border:1px solid #d5e5f7;
   border-radius:12px;
-  background:rgba(255,255,255,.97);
+  background:
+    linear-gradient(180deg,rgba(248,251,255,.97) 0%,rgba(248,251,255,.92) 66%,rgba(236,245,255,.76) 100%),
+    url("../assets/civiccare-city-hero.jpg") right center / cover no-repeat;
   box-shadow:0 4px 14px rgba(20,60,120,.05);
+}
+
+.authority-dashboard-v2 .weather-header {
+  padding-bottom:9px;
+  border-bottom:1px solid rgba(173,197,225,.55);
+}
+
+.authority-dashboard-v2 .weather-icon {
+  display:grid;
+  width:42px;
+  height:42px;
+  place-items:center;
+  border:1px solid rgba(255,255,255,.9);
+  border-radius:50%;
+  background:rgba(255,255,255,.76);
+  box-shadow:0 5px 16px rgba(37,99,235,.12);
+  font-size:26px;
 }
 
 .authority-dashboard-v2 .weather-header h2 {
   color:#14294a;
   font:800 14px Manrope,sans-serif;
+}
+
+.authority-dashboard-v2 .weather-metric {
+  border-color:rgba(193,211,233,.75);
+  background:rgba(255,255,255,.72);
 }
 
 .authority-dashboard-v2 .weather-main > span:first-child {

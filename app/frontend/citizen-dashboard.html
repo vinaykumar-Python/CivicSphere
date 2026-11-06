@@ -121,7 +121,7 @@
 <body class="dashboard-page citizen-dashboard-v2">
 <div class="civic-dashboard-shell citizen-shell">
     <aside class="civic-sidebar" aria-label="Citizen navigation">
-        <a class="civic-sidebar-brand" href="index.html"><span class="civic-logo"><img src="assets/civiccare-mark.svg" alt=""></span><span>CivicCare AI</span></a>
+        <a class="civic-sidebar-brand" href="index.html"><span class="civic-logo"><img src="assets/civiccare-mark.svg" alt=""></span><span>CivicSphere</span></a>
         <nav class="civic-sidebar-nav">
             <a class="is-active" href="#dashboard-home">⌂ <span>Home</span></a>
             <a href="#complaints-list">▤ <span>My Complaints</span></a>
@@ -136,10 +136,10 @@
 
 
     <header class="dashboard-header">
-        <a class="brand" href="index.html" aria-label="CivicCare AI home">
+        <a class="brand" href="index.html" aria-label="CivicSphere home">
             <span class="brand-mark"><img src="assets/civiccare-mark.svg" alt=""></span>
             <span class="brand-copy">
-                <strong>CivicCare<span> AI</span></strong>
+                <strong>CivicSphere</strong>
                 <small>BETTER CITIES, TOGETHER</small>
             </span>
         </a>
@@ -266,12 +266,12 @@
                     <h2>My Analytics</h2>
                     <p>See how your complaints are progressing and which issues you report most.</p>
                 </div>
-                <div class="analytics-tabs" role="tablist" aria-label="Complaint analytics view">
-                    <button type="button" class="analytics-tab is-active" id="analytics-status-tab" role="tab" aria-selected="true" aria-controls="analytics-status-view" data-analytics-view="status">By status</button>
-                    <button type="button" class="analytics-tab" id="analytics-category-tab" role="tab" aria-selected="false" aria-controls="analytics-category-view" data-analytics-view="category">By category</button>
+                <div class="analytics-tabs" role="tablist" aria-label="Complaint analytics view" aria-orientation="horizontal">
+                    <button type="button" class="analytics-tab is-active" id="analytics-status-tab" role="tab" aria-selected="true" aria-controls="analytics-status-view" tabindex="0" data-analytics-view="status">By status</button>
+                    <button type="button" class="analytics-tab" id="analytics-category-tab" role="tab" aria-selected="false" aria-controls="analytics-category-view" tabindex="-1" data-analytics-view="category">By category</button>
                 </div>
             </div>
-            <div class="analytics-view" id="analytics-status-view" role="tabpanel" aria-labelledby="analytics-status-tab">
+            <div class="analytics-view" id="analytics-status-view" role="tabpanel" aria-labelledby="analytics-status-tab" tabindex="0">
                 <div class="citizen-status-chart-wrap">
                     <div class="citizen-status-chart performance-donut-empty" id="citizen-status-chart" role="img" aria-label="Your complaint status breakdown">
                         <span><strong id="citizen-chart-total">—</strong><small>reports</small></span>
@@ -284,7 +284,7 @@
                     </div>
                 </div>
             </div>
-            <div class="analytics-view" id="analytics-category-view" role="tabpanel" aria-labelledby="analytics-category-tab" hidden>
+            <div class="analytics-view" id="analytics-category-view" role="tabpanel" aria-labelledby="analytics-category-tab" tabindex="0" hidden>
                 <p class="analytics-empty" id="analytics-category-empty" hidden>No category data yet. Submit a complaint to see your issue breakdown.</p>
                 <div class="category-analytics-chart" id="category-analytics-chart"></div>
             </div>

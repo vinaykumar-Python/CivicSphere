@@ -5,7 +5,7 @@ services:
     plan: free
     buildCommand: pip install -r requirements.txt
     startCommand: uvicorn app.main:app --host 0.0.0.0 --port $PORT
-    healthCheckPath: /api/health
+    healthCheckPath: /api/health/database
     envVars:
       - key: APP_NAME
         value: CivicCare AI
@@ -15,3 +15,15 @@ services:
         sync: false
       - key: JWT_SECRET_KEY
         generateValue: true
+  - type: cron
+    name: civiccare-sla-escalations
+    runtime: python
+    plan: starter
+    schedule: "*/5 * * * *"
+    buildCommand: pip install -r requirements.txt
+    startCommand: python -m app.run_sla_escalations
+    envVars:
+      - key: APP_ENV
+        value: production
+      - key: DATABASE_URL
+        sync: false
